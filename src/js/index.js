@@ -92,39 +92,42 @@ const creatFloorSkeleton = (id)=>{
     return floor;
 }
 
-const openLift = (lift,floorNumber)=>{
+const openLift = (lift,floorNumber,time)=>{
     setTimeout(()=>{
         lift.children[0].setAttribute("style","width:0px");
         lift.children[1].setAttribute("style","width:0px")
-    },1000*floorNumber)
+    },time)
 }
 
-const closeLift = (lift,floorNumber)=>{
+const closeLift = (lift,floorNumber,time)=>{
     setTimeout(()=>{
         lift.children[0].setAttribute("style","width:30px");
         lift.children[1].setAttribute("style","width:30px");
-        liftData.forEach((l)=>{
-            if(l.id == liftId){
-                l.floor=floorNumber;
-                l.inTransition=false;
-            }
-        })
-    },(1000*floorNumber)+2500)
+        setTimeout(()=>{
+            liftData.forEach((l)=>{
+                if(l.id == lift.id){
+                    l.floor=floorNumber;
+                    l.inTransition=false;
+                }
+            })
+        },2500)
+
+    },time+2500)
 }
 
 const movedown= (floorNumber)=>{ 
-    const liftId=calculateLiftMovement(floorNumber,"down");
+    const liftId=calculateLiftMovement(floorNumber);
     const lift = document.getElementById(liftId)
-    movelift(lift,floorNumber);
     liftData.forEach((l)=>{
         if(l.id == liftId){
-            l.floor=floorNumber;
+            l.inTransition=true;
         }
     })
+    movelift(lift,floorNumber);
 }
 
 const moveup= (floorNumber)=>{   
-    const liftId=calculateLiftMovement(floorNumber,"up");
+    const liftId=calculateLiftMovement(floorNumber);
     const lift = document.getElementById(liftId)
     liftData.forEach((l)=>{
         if(l.id == liftId){
@@ -135,12 +138,21 @@ const moveup= (floorNumber)=>{
 }
 
 const movelift= (lift,floorNumber)=>{
-    lift.setAttribute("style","transform: translateY(-"+(floorNumber-1)*116+"px); transition: transform "+1000*(floorNumber-1)+"ms ease 0s;")
-    openLift(lift,floorNumber);
-    closeLift(lift,floorNumber);
+    let time=0;
+    let diff=0
+    liftData.forEach((l)=>{
+        if(l.id == lift.id){
+           diff = Math.abs(l.floor -(floorNumber));
+           time = diff*2000
+        }
+    })
+
+    lift.setAttribute("style","transform: translateY(-"+(floorNumber-1)*116+"px); transition: transform "+time+"ms;")
+    openLift(lift,floorNumber,time);
+    closeLift(lift,floorNumber,time);
 }
 
-const calculateLiftMovement =(floorNumber,movement)=>{
+const calculateLiftMovement =(floorNumber)=>{
     liftId=findClosestLift(floorNumber);
     return liftId;
 }
@@ -150,7 +162,7 @@ const findClosestLift = (floorNumber)=>{
     let closestLift;
     liftData.forEach((l)=>{
         let subtract=floorNumber-l.floor;
-        if((diff*diff)>(subtract*subtract) ){
+        if((diff*diff)>(subtract*subtract) && !l.inTransition){
             diff=Math.abs(subtract);
             closestLift=l.id;
         }
