@@ -1,13 +1,50 @@
-const liftData =[];
+let liftData =[];
+let requestQueue =[];
+const validateInput =(floorCount,liftCount)=>{
+    if(isNaN(floorCount) || isNaN(liftCount)){
+        alert("Enter a valid number");
+        return false;
+    }
+    else if(floorCount<0 || liftCount<0)
+    {
+        alert("Enter positive numbers")
+        return false;
+    }
+    else if(Number(liftCount) > Number(floorCount))
+    {
+        alert("No. of Lifts cannot be more than no. of floors");
+        return false;
+    }
+    else{
+        return true;
+    }
+}
 
 const submitClick =()=>{
     const groundFloor = document.getElementById("floors");
     groundFloor.innerHTML = "";
     const floorCount = document.getElementById("floorCount").value;
     const liftCount = document.getElementById("liftCount").value;
-    console.log("floorcount : "+floorCount+"   liftCount : "+liftCount);
-    createFloor(floorCount,liftCount);
+    const validation = validateInput(floorCount,liftCount);
+    if(validation)
+    {
+        document.getElementById('form-container').setAttribute('hidden',"hidden");
+        document.getElementById('backButton').removeAttribute("hidden")
+        document.getElementById('floors').removeAttribute("hidden")
+        document.getElementById('backButton').removeAttribute("hidden")
+        createFloor(floorCount,liftCount);
+    }
 
+}
+
+const backButtonClick =()=>{
+    const floors = document.getElementById('floors')
+    floors.removeAttribute("class");
+    floors.innerHTML ="";
+    liftData =[];
+    requestQueue =[];
+    document.getElementById('backButton').setAttribute('hidden',"hidden");
+    document.getElementById('form-container').removeAttribute("hidden")
 }
 
 const createFloor =(floorCount,liftCount)=>{
@@ -23,14 +60,12 @@ const createFloor =(floorCount,liftCount)=>{
             createLift(liftCount);
         }
     }
-    const floors = document.getElementById("floors");
     floors.lastChild.children[0].children[1].children[1].setAttribute("style","visibility:hidden");
     floors.firstChild.children[0].children[1].children[0].setAttribute("style","visibility:hidden")
 }
 
 const createLift =(liftCount)=>{
     const groundFloor = document.getElementById('lifts-container-1');
-  
     for(idx2=1;idx2<=liftCount;idx2++){
         const lift=document.createElement('div');
         const liftLeftDoor = document.createElement('div');
@@ -74,11 +109,11 @@ const creatFloorSkeleton = (id)=>{
     const upButton = document.createElement("input");
     upButton.setAttribute("type","button");
     upButton.setAttribute("value","up");
-    upButton.setAttribute("onclick","moveup("+(id)+")")
+    upButton.setAttribute("onclick","moveButtonClick("+(id)+")")
     const downButton = document.createElement("input");
     downButton.setAttribute("type","button");
     downButton.setAttribute("value","down");
-    downButton.setAttribute("onclick","movedown("+(id)+")")
+    downButton.setAttribute("onclick","moveButtonClick("+(id)+")")
 
     floorButtons.appendChild(upButton);
     floorButtons.appendChild(downButton);
@@ -110,12 +145,16 @@ const closeLift = (lift,floorNumber,time)=>{
                     l.inTransition=false;
                 }
             })
+            if(requestQueue.length !=0){
+                let requestQueuelift = requestQueue.shift()
+                moveButtonClick(requestQueuelift)
+            }
         },2500)
 
     },time+2500)
 }
 
-const movedown= (floorNumber)=>{ 
+const moveButtonClick= (floorNumber)=>{   
     const liftId=calculateLiftMovement(floorNumber);
     const lift = document.getElementById(liftId)
     liftData.forEach((l)=>{
@@ -123,17 +162,10 @@ const movedown= (floorNumber)=>{
             l.inTransition=true;
         }
     })
-    movelift(lift,floorNumber);
-}
-
-const moveup= (floorNumber)=>{   
-    const liftId=calculateLiftMovement(floorNumber);
-    const lift = document.getElementById(liftId)
-    liftData.forEach((l)=>{
-        if(l.id == liftId){
-            l.inTransition=true;
-        }
-    })
+    if(lift==undefined){
+        requestQueue.push(floorNumber);
+        return null;
+    }
     movelift(lift,floorNumber);
 }
 
