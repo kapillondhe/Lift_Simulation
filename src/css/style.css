@@ -53,16 +53,16 @@
     height: 96px;
     position: absolute;
     top: 0;
-    transition: width 2.5s;
+    transition: width 2.5s linear;
   }
   
   .liftLeftDoor {    
-    border-right: 5px solid black;
+    border-right: 3px solid black;
     /* left: 0; */
   }
   
   .liftRightDoor {
-    border-left: 5px solid black;
+    border-left: 3px solid black;
     right: 0;
   }
 

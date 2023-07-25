@@ -12,7 +12,12 @@ const validateInput =(floorCount,liftCount)=>{
     }
     else if(Number(liftCount) > Number(floorCount))
     {
-        alert("No. of Lifts cannot be more than no. of floors");
+        alert("No. of Lifts cannot be more than No. of floors");
+        return false;
+    }
+    else if (Number(liftCount)==0 || Number(floorCount)==0)
+    {
+        alert("No. of Lifts or No. of floors cannot be zero");
         return false;
     }
     else{
@@ -179,7 +184,7 @@ const movelift= (lift,floorNumber)=>{
         }
     })
 
-    lift.setAttribute("style","transform: translateY(-"+(floorNumber-1)*116+"px); transition: transform "+time+"ms;")
+    lift.setAttribute("style","transform: translateY(-"+(floorNumber-1)*116+"px); transition: transform "+time+"ms linear;")
     openLift(lift,floorNumber,time);
     closeLift(lift,floorNumber,time);
 }
