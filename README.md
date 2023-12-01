@@ -1,18 +1,39 @@
-# Lift_Simulation
-Live project link : https://lift-simulation-haaksbg6o-kapillondhe.vercel.app/
+# Lift Simulation
 
-Project Requirements
-Have a page where you input the number of floors and lifts from the user
-An interactive UI is generated, where we have visual depictions of lifts and buttons on floors
-Upon clicking a particular button on the floor, a lift goes to that floor
-Milestone 1:
+## Project Overview
 
-Data store that contains the state of your application data
-JS Engine that is the controller for which lift goes where
-Dumb UI that responds to controller's commands
-Milestone 2:
+Welcome to the Lift Simulation project! This web application simulates a building with multiple floors and lifts. Users can input the number of floors and lifts, and an interactive UI will be generated with visual depictions of lifts and buttons on floors. The lifts respond to user commands, moving to the specified floors upon button clicks.
 
-Lift having doors open in 2.5s, then closing in another 2.5s
-Lift moving at 2s per floor
-Lift stopping at every floor where it was called
-Mobile friendly design
+### Live Project Link
+
+[**Lift Simulation Project**](https://lift-simulation-haaksbg6o-kapillondhe.vercel.app/)
+
+## Milestones
+
+### Milestone 1:
+
+- **Data Store:** Implemented a data store to maintain the state of the application data.
+
+- **JS Engine:** Developed a JavaScript engine that acts as the controller, determining which lift goes to which floor.
+
+- **Dumb UI:** Created a basic user interface that responds to the commands from the controller.
+
+### Milestone 2:
+
+- **Lift Animation:** Implemented lift door animation, opening in 2.5 seconds and closing in another 2.5 seconds.
+
+- **Lift Movement:** Set the lift's movement speed at 2 seconds per floor, ensuring it stops at every floor where it was called.
+
+- **Mobile-Friendly Design:** Designed the user interface to be responsive and mobile-friendly.
+
+## How to Use
+
+1. Open the [live project link](https://lift-simulation-haaksbg6o-kapillondhe.vercel.app/).
+
+2. Input the number of floors and lifts.
+
+3. Interact with the visual depiction of lifts and buttons on floors.
+
+4. Click on a specific floor button to command a lift to that floor.
+
+5. Observe the lift animation and movement as it responds to user commands.
