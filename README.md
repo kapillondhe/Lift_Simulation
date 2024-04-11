@@ -8,6 +8,9 @@ Welcome to the Lift Simulation project! This web application simulates a buildin
 
 [**Lift Simulation Project**](https://lift-simulation-haaksbg6o-kapillondhe.vercel.app/)
 
+![image](https://github.com/kapillondhe/Lift_Simulation/assets/41846637/2e13ae63-993a-4d32-84d1-30f97925cbdb)
+
+
 ## Milestones
 
 ### Milestone 1:
